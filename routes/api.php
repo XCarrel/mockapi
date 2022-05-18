@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\RunForCauseController;
+use App\Http\Controllers\API\NextepController;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->get('/test', function (Request $request) {
-    return 'Authenticated!';
+// Run for cause endpoints
+Route::middleware('auth:api')->get('/rfc/me', function (Request $request) {
+    return response(json_encode(User::find(Auth::user()->user_id)), 200);
 });
+Route::post('/rfc/mytoken',[RunForCauseController::class,'mytoken']);
 
-Route::post('/mytoken',[RunForCauseController::class,'mytoken']);
+// Nextep endpoints
+Route::middleware('auth:api')->get('/nxp/me', function (Request $request) {
+    return response(json_encode(User::find(Auth::user()->user_id)), 200);
+});
+Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
+
