@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\RunForCauseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->get('/test', function (Request $request) {
     return 'Authenticated!';
 });
+
+Route::post('/mytoken',[RunForCauseController::class,'mytoken']);

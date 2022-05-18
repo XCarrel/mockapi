@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('api_clients', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('api_token')->unique();
             $table->timestamps();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
