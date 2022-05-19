@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\RunForCauseController;
+use App\Http\Controllers\API\FiameController;
 use App\Http\Controllers\API\NextepController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\API\RunForCauseController;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,10 @@ Route::middleware('auth:api')->get('/rfc/me', function (Request $request) {
 Route::post('/rfc/mytoken',[RunForCauseController::class,'mytoken']);
 
 // Nextep endpoints
-Route::middleware('auth:api')->get('/nxp/me', function (Request $request) {
-    return response(json_encode(User::find(Auth::user()->user_id)), 200);
-});
+Route::middleware('auth:api')->get('/nxp/profile', [NextepController::class, 'profile']);
 Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
 
+// Fiame
+Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
+Route::middleware('auth:api')->get('/fiame/me', [FiameController::class, 'profile']);
+Route::middleware('auth:api')->get('/fiame/mypurchases',[FiameController::class,'mypurchases']);

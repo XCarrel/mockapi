@@ -21,6 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'firstname',
+        'lastname',
+        'phone',
+        'picture',
+        'wallet_address',
+        '2FA',
+        'description'
     ];
 
     /**
@@ -45,5 +52,15 @@ class User extends Authenticatable
     public function apiClient()
     {
         return $this->hasOne(ApiClient::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany();
+    }
+
+    public function batches()
+    {
+        return $this->belongsToMany(Batch::class)->withPivot('quantity')->with('item');
     }
 }

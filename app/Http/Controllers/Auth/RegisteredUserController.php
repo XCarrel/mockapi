@@ -41,9 +41,18 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // assume fname.lnname@some.com
+        $parts = explode('@', $request->email);
+        $parts = explode('.',$parts[0]);
+        $fname = $parts[0] ?: '???';
+        $lname = $parts[1] ?: '???';
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'firstname' => $fname,
+            'lastname' => $lname,
+            'phone' => '07'.rand(70000000, 99999999),
+            'picture' => 'g'.(rand(1,8)).'.png',
             'password' => Hash::make($request->password),
         ]);
 
