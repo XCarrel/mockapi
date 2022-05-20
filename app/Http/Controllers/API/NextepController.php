@@ -24,13 +24,16 @@ class NextepController extends Controller
         $user = User::findOrFail(Auth::user()->user_id);
         return [
             'id' => $user->id,
+            'email' => $user->email,
             'username' => $user->name,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
-            'email' => $user->email,
             'picture' => $user->picture,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
+            'creation_date' => $user->created_at,
+            'last_logged_date' => $user->last_login,
+            'wallet_address' => $user->last_login,
+            'two_factor_auth' => $user->two_factor_auth,
+            'description' => $user->description,
         ];
     }
 
