@@ -4,6 +4,7 @@ use App\Http\Controllers\API\FiameController;
 use App\Http\Controllers\API\NextepController;
 use App\Http\Controllers\API\RunForCauseController;
 use App\Models\User;
+use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +38,6 @@ Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
 Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
 Route::middleware('auth:api')->get('/fiame/me', [FiameController::class, 'profile']);
 Route::middleware('auth:api')->get('/fiame/mypurchases',[FiameController::class,'mypurchases']);
+Route::prefix('fiame')->name('fiame.')->group(function () {
+    Route::apiResource('products',ProductController::class);
+});

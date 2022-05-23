@@ -9,6 +9,8 @@ class Item extends Model
 {
     use HasFactory;
 
+    public $table='items';
+
     public function user()
     {
         return $this->belongsTo(User::class);
