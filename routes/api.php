@@ -4,7 +4,7 @@ use App\Http\Controllers\API\FiameController;
 use App\Http\Controllers\API\NextepController;
 use App\Http\Controllers\API\RunForCauseController;
 use App\Models\User;
-use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
