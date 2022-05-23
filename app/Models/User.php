@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Batch::class)->withPivot('quantity')->with('item');
     }
+
+    public function fiame_orders()
+    {
+        return FiameOrder::where ('user_id',$this->id)->get();
+    }
 }

@@ -11,11 +11,16 @@ class Batch extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('quantity');
+        return $this->belongsToMany(User::class)->withPivot(['id','quantity','paid']); // pivot is the order for the product
     }
 
     public function item()
     {
         return $this->belongsTo(Item::class)->with('user');
+    }
+
+    public function gathering()
+    {
+        return $this->belongsTo(Gathering::class);
     }
 }

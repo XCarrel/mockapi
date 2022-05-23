@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +35,19 @@ class FiameController extends Controller
 
     public function mypurchases()
     {
-        return User::find(Auth::user()->id)->batches;
+        $res = [];
+        foreach ((User::find(Auth::user()->id))->fiame_orders() as $order) {
+            $res[] = [
+                'order_id' => $order->id,
+                'product' => $order->batch->item->title,
+                'made_by' => $order->batch->item->user->name,
+                'quantity' => $order->quantity,
+                'paid' => $order->paid,
+                'order_date' => $order->created_at,
+                'event_date' => $order->batch->gathering->date
+            ];
+        }
+        
+        return $res;
     }
 }
