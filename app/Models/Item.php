@@ -15,4 +15,9 @@ class Item extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

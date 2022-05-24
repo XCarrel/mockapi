@@ -38,6 +38,4 @@ Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
 Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
 Route::middleware('auth:api')->get('/fiame/me', [FiameController::class, 'profile']);
 Route::middleware('auth:api')->get('/fiame/mypurchases',[FiameController::class,'mypurchases']);
-Route::prefix('fiame')->name('fiame.')->group(function () {
-    Route::apiResource('products',ProductController::class);
-});
+Route::middleware('auth:api')->get('/fiame/products',[FiameController::class,'products']);

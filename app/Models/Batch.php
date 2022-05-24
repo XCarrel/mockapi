@@ -23,4 +23,9 @@ class Batch extends Model
     {
         return $this->belongsTo(Gathering::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(FiameOrder::class);
+    }
 }

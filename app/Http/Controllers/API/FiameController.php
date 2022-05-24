@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,27 @@ class FiameController extends Controller
                 'event_date' => $order->batch->gathering->date
             ];
         }
-        
+
+        return $res;
+    }
+
+    public function products()
+    {
+        $res = [];
+        foreach (Product::all() as $product) {
+            $res[] = [
+                'id' => $product->id,
+                'name' => $product->title,
+                'price' => $product->price,
+                'img' => $product->image,
+                'user' => [
+                    'id' => $product->user->id,
+                    'name' => $product->user->name,
+                    'email' => $product->user->email,
+                    ],
+                'orders' => $product->orders(),
+            ];
+        }
         return $res;
     }
 }
