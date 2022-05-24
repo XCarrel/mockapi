@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Batch;
+use App\Models\FiameOrder;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -70,6 +72,17 @@ class FiameController extends Controller
             ];
         }
         return $res;
+    }
+
+    public function purchase(Request $request)
+    {
+        // find batch
+        $batch = Batch::where('gathering_id',$request->input('event_id'))->where('item_id',$request->input('product_id'))->firstOrFail();
+        $order = new FiameOrder();
+        $order->user_id = (User::find(Auth::user()->id))->id;
+        $order->batch()->associate($batch);
+        $order->quantity = $request->input('quantity');
+        $order->save();
     }
 
     public function users()

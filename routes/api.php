@@ -39,4 +39,5 @@ Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
 Route::middleware('auth:api')->get('/fiame/me', [FiameController::class, 'profile']);
 Route::middleware('auth:api')->get('/fiame/mypurchases',[FiameController::class,'mypurchases']);
 Route::middleware('auth:api')->get('/fiame/products',[FiameController::class,'products']);
-Route::get('/fiame/users', [FiameController::class,'users']);
+Route::middleware('auth:api')->get('/fiame/users', [FiameController::class,'users']);
+Route::middleware('auth:api')->post('/fiame/purchase', [FiameController::class,'purchase']);
