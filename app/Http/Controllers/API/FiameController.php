@@ -71,4 +71,9 @@ class FiameController extends Controller
         }
         return $res;
     }
+
+    public function users()
+    {
+        return User::all();
+    }
 }
