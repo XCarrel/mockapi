@@ -32,7 +32,7 @@ class NextepController extends Controller
             'picture' => $user->picture,
             'creation_date' => $user->created_at,
             'last_logged_date' => $user->last_login,
-            'wallet_address' => $user->last_login,
+            'wallet_address' => $user->wallet_address,
             'two_factor_auth' => $user->two_factor_auth,
             'description' => $user->description,
         ];
