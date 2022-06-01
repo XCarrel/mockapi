@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class RunForCauseController extends Controller
 {
@@ -47,6 +48,18 @@ class RunForCauseController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showCurrentUser()
+    {
+        $res = User::find(Auth::user()->user_id)->toArray();
+        $keep = ["id", "name", "phone", "email", "phone", "picture"]; // the only object's fields we want to return
+        foreach ($res as $var => $value) {
+            if (array_search($var,$keep) === false) {
+                unset ($res[$var]);
+            }
+        }
+        return $res;
     }
 
     /**

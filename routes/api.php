@@ -25,9 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Run for cause endpoints
-Route::middleware('auth:api')->get('/rfc/me', function (Request $request) {
-    return response(json_encode(User::find(Auth::user()->user_id)), 200);
-});
+Route::middleware('auth:api')->get('/rfc/me', [RunForCauseController::class,'showCurrentUser']);
 Route::post('/rfc/mytoken',[RunForCauseController::class,'mytoken']);
 
 // Nextep endpoints
