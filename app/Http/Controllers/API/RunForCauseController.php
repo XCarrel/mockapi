@@ -7,6 +7,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use mysql_xdevapi\Exception;
 
 class RunForCauseController extends Controller
 {
@@ -69,9 +70,22 @@ class RunForCauseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if ($request->input('_method') == 'PATCH') {
+            try {
+                $user = User::find(Auth::user()->user_id);
+                $user->name = $request->has('name') ? $request->input('name') : $user->name;
+                $user->email = $request->has('email') ? $request->input('email') : $user->email;
+                $user->phone = $request->has('phone') ? $request->input('phone') : $user->phone;
+                $user->save();
+                return response("Ok",200);
+            } catch (Exception $e) {
+                return response('bad request',400);
+            }
+        } else {
+            return response('Only PATCH method allowed', 405);
+        }
     }
 
     /**
