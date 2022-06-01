@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
 
 class NextepController extends Controller
 {
@@ -76,9 +77,26 @@ class NextepController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if ($request->input('_method') == 'PATCH') {
+            try {
+                $user = User::find(Auth::user()->user_id);
+                $user->name = $request->has('username') ? $request->input('username') : $user->name;
+                $user->email = $request->has('email') ? $request->input('email') : $user->email;
+                $user->firstname = $request->has('firstname') ? $request->input('firstname') : $user->firstname;
+                $user->lastname = $request->has('lastname') ? $request->input('lastname') : $user->lastname;
+                $user->wallet_address = $request->has('wallet_address') ? $request->input('wallet_address') : $user->wallet_address;
+                $user->two_factor_auth = $request->has('two_factor_auth') ? $request->input('two_factor_auth') : $user->two_factor_auth;
+                $user->description = $request->has('description') ? $request->input('description') : $user->description;
+                $user->save();
+                return response("Ok",200);
+            } catch (Exception $e) {
+                return response('bad request',400);
+            }
+        } else {
+            return response('Only PATCH method allowed', 405);
+        }
     }
 
     /**

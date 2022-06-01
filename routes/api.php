@@ -31,6 +31,7 @@ Route::post('/rfc/mytoken',[RunForCauseController::class,'mytoken']);
 
 // Nextep endpoints
 Route::middleware('auth:api')->get('/nxp/profile', [NextepController::class, 'profile']);
+Route::middleware('auth:api')->patch('/nxp/profile',[NextepController::class, 'update']);
 Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
 
 // Fiame
