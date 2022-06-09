@@ -8,6 +8,7 @@ use App\Models\Gathering;
 use App\Models\Item;
 use App\Models\User;
 use App\Models\batchuser;
+use App\Models\VotingTopic;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -35,6 +36,16 @@ class DatabaseSeeder extends Seeder
             $batch = Batch::all()->random();
             $user = User::all()->random();
             $user->batches()->attach($batch, ['quantity' => rand(1,10)]);
+        }
+        $topics = [
+            "Voulez-vous plus de crème dans les millefeuilles ?",
+            "Acceptez-vous une augmentation de vos dividendes de 60% par année ?",
+            "Est-il temps de construire un nouveau bâtiment pour nos headquarters de Hong-Kong ?"
+        ];
+        foreach ($topics as $topic) {
+            $vt = new VotingTopic();
+            $vt->subject = $topic;
+            $vt->save();
         }
     }
 }
