@@ -109,4 +109,18 @@ class NextepController extends Controller
     {
         //
     }
+
+    public function uploadPhoto(Request $request)
+    {
+        if ($file = $request->file('photo')) {
+            $file->store('public/pics');
+            $user = User::find(Auth::user()->user_id);
+            $user->picture = $file->hashName();
+            $user->save();
+            return response('Ok',200);
+        } else {
+            return response('Bad request',400);
+        }
+
+    }
 }

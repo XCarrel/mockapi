@@ -33,6 +33,7 @@ Route::post('/rfc/mytoken',[RunForCauseController::class,'mytoken']);
 Route::middleware('auth:api')->get('/nxp/profile', [NextepController::class, 'profile']);
 Route::middleware('auth:api')->patch('/nxp/profile',[NextepController::class, 'update']);
 Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
+Route::middleware('auth:api')->post('/nxp/profile/photo',[NextepController::class,'uploadPhoto']);
 
 // Fiame
 Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
