@@ -34,6 +34,7 @@ Route::middleware('auth:api')->get('/nxp/profile', [NextepController::class, 'pr
 Route::middleware('auth:api')->patch('/nxp/profile',[NextepController::class, 'update']);
 Route::post('/nxp/mytoken',[NextepController::class,'mytoken']);
 Route::middleware('auth:api')->post('/nxp/profile/photo',[NextepController::class,'uploadPhoto']);
+Route::middleware('auth:api')->get('/nxp/voting_topics', [NextepController::class, 'votingTopics']);
 
 // Fiame
 Route::post('/fiame/mytoken',[FiameController::class,'mytoken']);
