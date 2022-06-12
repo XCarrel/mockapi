@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\Trackpoint;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,10 +39,23 @@ class RunForCauseController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find(Auth::user()->user_id);
-        $lat = $request->input('lat');
-        $long = $request->input('long');
-        return $user->name." @ $lat / $long";
+        try {
+            $user = User::find(Auth::user()->user_id);
+            if (filter_var($request->input('lat'), FILTER_VALIDATE_FLOAT) && filter_var($request->input('long'), FILTER_VALIDATE_FLOAT)) {
+                $lat = doubleval($request->input('lat'));
+                $long = doubleval($request->input('long'));
+                $tp = new Trackpoint();
+                $tp->lat = $lat;
+                $tp->long = $long;
+                $tp->user()->associate($user);
+                $tp->save();
+                return response('Ok',200);
+            } else {
+                return response('Bad coordinates',400);
+            }
+        } catch (\Exception $e) {
+            return response('Bad request:'.$e->getMessage(),400);
+        }
     }
 
     /**
