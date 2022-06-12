@@ -31,14 +31,17 @@ class RunForCauseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a waypoint.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $user = User::find(Auth::user()->user_id);
+        $lat = $request->input('lat');
+        $long = $request->input('long');
+        return $user->name." @ $lat / $long";
     }
 
     /**
@@ -49,7 +52,6 @@ class RunForCauseController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     public function showCurrentUser()
